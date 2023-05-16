@@ -13,7 +13,7 @@
 		2398E41A2A05E0B1001DBAD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2398E4182A05E0B1001DBAD7 /* Main.storyboard */; };
 		2398E41C2A05E0B5001DBAD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2398E41B2A05E0B5001DBAD7 /* Assets.xcassets */; };
 		2398E41F2A05E0B5001DBAD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2398E41D2A05E0B5001DBAD7 /* LaunchScreen.storyboard */; };
-		23BAB9002A0A918A00326FD1 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BAB8FF2A0A918A00326FD1 /* Item.swift */; };
+		29B6BE292A115D5200E43012 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 29B6BE272A115D5200E43012 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +25,7 @@
 		2398E41B2A05E0B5001DBAD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2398E41E2A05E0B5001DBAD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2398E4202A05E0B5001DBAD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		23BAB8FF2A0A918A00326FD1 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		29B6BE282A115D5200E43012 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 		23BAB8FD2A0A916700326FD1 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				23BAB8FF2A0A918A00326FD1 /* Item.swift */,
+				29B6BE272A115D5200E43012 /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -173,7 +173,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BAB9002A0A918A00326FD1 /* Item.swift in Sources */,
+				29B6BE292A115D5200E43012 /* DataModel.xcdatamodeld in Sources */,
 				2398E4172A05E0B0001DBAD7 /* TodoListViewController.swift in Sources */,
 				2398E4132A05E0B0001DBAD7 /* AppDelegate.swift in Sources */,
 				2398E4152A05E0B0001DBAD7 /* SceneDelegate.swift in Sources */,
@@ -331,6 +331,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -359,6 +360,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -394,6 +396,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		29B6BE272A115D5200E43012 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				29B6BE282A115D5200E43012 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 29B6BE282A115D5200E43012 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2398E4072A05E0B0001DBAD7 /* Project object */;
 }

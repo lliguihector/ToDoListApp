@@ -6,20 +6,40 @@
 //
 
 import UIKit
+import CoreData
+class TodoListViewController: UITableViewController{
 
-class TodoListViewController: UITableViewController {
+    let searchController = UISearchController(searchResultsController: nil)
 
     
+ 
+   
     var itemArray = [Item]()
-    let dataFliePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-    
-    let defaults = UserDefaults.standard
+   
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+        
+        
+        
+        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        
+        
+        
+        searchController.delegate = self
+        
+ 
+        
+        
+        
         loadItems()
 
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
     }
     
     
@@ -48,13 +68,19 @@ class TodoListViewController: UITableViewController {
     //MARK - TableView Delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-      
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
+        
+       itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
        saveItems()
+        
+        tableView.deselectRow(at: indexPath, animated: true)
       
     }
 
     
+
     
     //MARK - Add New item
     @IBAction func addButtonPressed(_ sender: Any) {
@@ -69,17 +95,13 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default){ (action) in
             //what will happen once the user clicks the add button on our UIAlert
             print("Sucess!")
-            
-            let newItem = Item()
-            newItem.title = textField.text!
-         
-            self.itemArray.append(newItem)
 
-            
+            let newItem = Item(context: self.context)
+            newItem.done = false
+            newItem.title = textField.text!
+            self.itemArray.append(newItem)
             self.saveItems()
-            
-            
-            
+ 
         }
         
         
@@ -101,17 +123,13 @@ class TodoListViewController: UITableViewController {
     }
     
     
-    
+    //CREATE
     func saveItems(){
-        
-        
-        let encoder = PropertyListEncoder()
-        
+
         do{
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFliePath!)
+           try context.save()
         }catch{
-            print("Error encoding item array, \(error)")
+        print("Error saving context \(error)")
         }
         
         
@@ -119,20 +137,81 @@ class TodoListViewController: UITableViewController {
         
     }
     
-    func loadItems(){
+    //READ
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         
-        if let data = try? Data(contentsOf: dataFliePath!){
+        //let request : NSFetchRequest<Item> = Item.fetchRequest()
+        do{
+           itemArray = try context.fetch(request)
             
-            let decoder = PropertyListDecoder()
-            
-            do{
-            itemArray = try decoder.decode([Item].self, from: data)
-            
-            }catch{
-                print("Error decoding item array, \(error) ")
-            }
+        }catch{
+            print("Error fetching data from context \(error)")
+        }
         
-    }
+        self.tableView.reloadData()
+
 }
 
+}
+
+
+//MARK - UISEARCH RESULTS UPDATING
+
+
+extension TodoListViewController: UISearchResultsUpdating{
+    
+    
+    func updateSearchResults(for searchController: UISearchController) {
+
+        
+        guard let searchText = searchController.searchBar.text else{
+            
+            return
+        }
+        
+        
+        
+        if searchText.isEmpty{
+            loadItems()
+        }else{
+            print(searchText)
+            
+            
+            let request: NSFetchRequest<Item> = Item.fetchRequest()
+            request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+            
+    
+            request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+            
+            loadItems(with: request)
+        }
+        }
+        
+//        if let searchText = searchController.searchBar.text{
+//            // Implement your search logic here and update your search results
+//            print(searchText)
+//
+//
+//            let request: NSFetchRequest<Item> = Item.fetchRequest()
+//            request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+//
+//
+//            request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+//
+//            loadItems(with: request)
+//        }
+
+    
+    
+}
+
+
+//MARK -
+
+extension TodoListViewController: UISearchControllerDelegate{
+
+    //Reloads Table View data when pressed cancelled on search bar
+    func didDismissSearchController(_ searchController: UISearchController) {
+           loadItems()
+       }
 }
